@@ -31,7 +31,7 @@ class Contact
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private int $phone;
+    private ?int $phone;
 
     /**
      * @ORM\Column(type="string", length=80)
