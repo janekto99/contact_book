@@ -1,0 +1,97 @@
+{% block body %}
+    <style>
+        .info-button{
+            background-color: #5eb5e0;
+            border-radius: 100px;
+            padding: 0 7px;
+            cursor: pointer;
+        }
+
+        #popup{
+            display: none;
+            width: 50%;
+            margin: 0 auto;
+            background-color: #5eb5e0;
+            padding: 10px 10px;
+        }
+
+        table, form{
+            width: 80%;
+            margin: 10px auto;
+            text-align: center;
+        }
+
+
+        .pagination{
+            width: 85%;
+            margin: 40px auto;
+            text-align: right;
+        }
+    </style>
+
+<div>
+    {{ form(form) }}
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Note</th>
+            <th>Actions</th>
+        </tr>
+        {% for contact in pagination %}
+            <tr>
+                <td>{{ contact.name }}</td>
+                <td>{{ contact.surname }}</td>
+                <td>{{ contact.phone }}</td>
+                <td>{{ contact.email }}</td>
+                <td>{{ contact.note|slice(0, 15) ~ (contact.note|length > 15 ? '...' : '') }}
+                    <span data-value="{{ contact.note }}" class="info-button">i</span>
+                </td>
+                <td>
+                    <a href="{{ path("updateContact", {name: contact.name, id: contact.id}) }}">Update</a>
+                    <a href="{{ path("deleteContact", {id: contact.id}) }}">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <div class="pagination">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
+
+    <div id="popup">
+        <h2>Note</h2>
+        <p id="note"></p>
+        <button id="popup-close">Close</button>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    let infoButtons = document.getElementsByClassName('info-button')
+    let popup = document.getElementById('popup')
+    let noteElement = document.getElementById('note')
+    let popupClose = document.getElementById('popup-close')
+
+    for (let i = 0; i < infoButtons.length; i++) {
+        infoButtons[i].addEventListener("click", function () {
+            noteElement.innerHTML = infoButtons[i].getAttribute('data-value')
+            popup.style.display = 'block'
+        })
+    }
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape'){
+            popup.style.display = 'none'
+        }
+    })
+
+    popupClose.addEventListener('click', function () {
+        popup.style.display = 'none'
+    })
+</script>
+{% endblock %}
