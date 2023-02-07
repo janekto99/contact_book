@@ -9,8 +9,7 @@ Přejděte do složky projektu:
 Nainstalujte závislosti pomocí:
 >composer install
 
-V .env souboru nastavte databázové spojení:
-![img.png](img.png)
+**Než provedete následující kroky, nastavte v .env souboru databázové spojení**
 
 Dále vytvořte databázi pomocí:
 >php bin/console doctrine:database:create
