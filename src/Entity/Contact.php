@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Contact
 {
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -40,7 +41,7 @@ class Contact
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private string $note;
+    private ?string $note;
 
     public function getId(): ?int
     {
